@@ -59,16 +59,29 @@ router.get('/:id', async (req, res) => {
 
 // PUT route to update a player by ID
 router.put('/:id', async (req, res) => {
-    try {
-      const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!updatedPlayer) {
-        return res.status(404).json({ message: 'Player not found' });
-      }
-      res.json(updatedPlayer);  // Return the updated player data
-    } catch (err) {
-      res.status(400).json({ message: err.message });
+  try {
+    const { name, email, level, lives } = req.body;
+
+    // Log the incoming request for debugging
+    console.log('Saving player data:', { name, email, level, lives });
+
+    const updatedPlayer = await Player.findByIdAndUpdate(
+      req.params.id,
+      { name, email, level, lives },
+      { new: true }
+    );
+
+    if (!updatedPlayer) {
+      return res.status(404).json({ message: 'Player not found' });
     }
-  });
+
+    // Send the updated player data back
+    res.status(200).json(updatedPlayer);
+  } catch (error) {
+    console.error('Error saving player data:', error);
+    res.status(500).json({ message: 'Error saving game data' });
+  }
+});
 
 // DELETE route to delete a player by ID
 router.delete('/:id', async (req, res) => {
@@ -83,5 +96,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting player' });
   }
 });
+
 
 module.exports = router;
