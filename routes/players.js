@@ -8,10 +8,16 @@ const Player = require('../models/Player'); // Import the Player model
 // POST route to create a new player
 router.post('/', async (req, res) => {
   try {
-    const { name, email, level, lives } = req.body;
+    const { name, email } = req.body;
+
+    // Check if a player with the same name or email already exists
+    const existingPlayer = await Player.findOne({ $or: [{ name }, { email }] });
+    if (existingPlayer) {
+      return res.status(409).json({ message: 'Player already exists' }); // Conflict response
+    }
 
     // Create and save a new player
-    const newPlayer = new Player({ name, email, level, lives });
+    const newPlayer = new Player(req.body);
     await newPlayer.save();
 
     res.status(201).json(newPlayer); // Respond with the newly created player
