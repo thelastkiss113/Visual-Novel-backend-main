@@ -20,6 +20,11 @@ app.use(express.json());
 app.use('/api/players', playerRoutes);
 app.use('/api/progress', progressRoutes);
 
+// Default route for root URL
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
