@@ -18,7 +18,7 @@ const app = express();
 
 // Configure CORS
 const corsOptions = {
-  origin: ['https://visualnovel9lives.netlify.app', 'http://localhost:5000'], // Allow specified origins
+  origin: ['https://visualnovel9lives.netlify.app'], 
   optionsSuccessStatus: 200, // For legacy browser support
 };
 app.use(cors(corsOptions)); // Apply CORS middleware
