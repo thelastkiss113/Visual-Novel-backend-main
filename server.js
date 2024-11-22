@@ -29,3 +29,14 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+const cors = require('cors');
+
+
+const corsOptions = {
+  origin: ['https://visualnovel9lives.netlify.app', 'http://localhost:5000'], 
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
