@@ -1,6 +1,5 @@
 // backend/server.js
 // Entry point for the backend server, setting up the Express server and routes
-
 const express = require('express');
 const cors = require('cors'); // Require CORS only once
 const dotenv = require('dotenv');
@@ -18,7 +17,12 @@ const app = express();
 
 // Configure CORS
 const corsOptions = {
-  origin: ['https://visualnovel9lives.netlify.app'], 
+  origin: [
+    'http://localhost:5173', // For local development
+    'https://visualnovel9lives.netlify.app', // For production (Netlify URL)
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Specify allowed methods
+  credentials: true, // Allow cookies to be sent with requests (if needed)
   optionsSuccessStatus: 200, // For legacy browser support
 };
 app.use(cors(corsOptions)); // Apply CORS middleware
